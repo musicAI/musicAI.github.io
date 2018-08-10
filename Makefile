@@ -15,6 +15,7 @@ run: $(SRC_DIR)
 	@netlify-lambda serve $(SRC_DIR)
 
 build: $(SRC_DIR)
+	@which netlify-lambda || npm install netlify-lambda --save-dev
 	@netlify-lambda build $(SRC_DIR)
 
 
