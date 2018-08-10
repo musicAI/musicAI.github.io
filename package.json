@@ -1,0 +1,26 @@
+{
+  "name": "musicai",
+  "version": "0.0.1",
+  "description": "",
+  "main": "''",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "netlify-lambda": "^0.4.0",
+    "webpack": "^4.16.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "make run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musicAI/musicAI.github.io.git"
+  },
+  "author": "yijie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/musicAI/musicAI.github.io/issues"
+  },
+  "homepage": "https://github.com/musicAI/musicAI.github.io#readme"
+}
