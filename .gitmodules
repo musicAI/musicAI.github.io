@@ -1,4 +1,4 @@
 [submodule "lambda/lib/wechat"]
 	path = lambda/lib/wechat
-	url = git@github.com:musicAI/wechat.git
+	url = https://github.com/musicAI/wechat.git
 	branch = master
