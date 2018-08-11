@@ -15,20 +15,21 @@ function btoa(b64encoded){
 	return Buffer.from(b64encoded, 'base64');
 }
 
-exports.handler = (event, context, cb) => awsServerlessExpress.proxy(server, (
-	function(){
-		if(event.isBase64Encoded){
-			//console.log('base64 encoded', b);
-			event.body = btoa(event.body).toString('utf8'); 
-			// for GET request or POST without data, this would be '[object Object]'
-		}
-		return event;
+exports.handler = (event, context, callback) => {
+	console.log(event.queryStringParameters);
+	context.callbackWaitsForEmptyEventLoop = false;
+	context.succeed = function(results){
+		results.headers.connection = 'close';// fix timeout
+		results.headers["Access-Control-Allow-Origin"] = "*";
+		console.log(results.headers);
+		callback(null, results);
+		return true;
 	}
-)(), (
-	function(){
-		context.succeed = function(results){
-			cb(null, results);
-		}
-		return context;
+	if(event.isBase64Encoded){
+		//console.log('base64 encoded', b);
+		event.body = btoa(event.body).toString('utf8');
+		console.log(event.body);
+		// for GET request or POST without data, this would be '[object Object]'
 	}
-)());
+	return awsServerlessExpress.proxy(server, event, context);
+};

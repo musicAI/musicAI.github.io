@@ -23,7 +23,7 @@ function dummy(req, res){
     res.end('dummy');
 }
 
-const _DEBUG_ = false;
+const _DEBUG_ = true;
 app.use(_DEBUG_? dummy: router);
 
 module.exports = app;
