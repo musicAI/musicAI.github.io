@@ -57,7 +57,7 @@ function refresh_token(){
       let wxGetAccessTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?' + qs.stringify(queryParams);
       //console.log(wxGetAccessTokenUrl);
 
-      get(url, function(res){
+      get(wxGetAccessTokenUrl, function(res){
           res = JSON.parse(res);
           console.log(res);
           access_token = res['access_token']; // need destruct
@@ -81,15 +81,22 @@ app.use(express.json()); // parse body
 app.use(express.urlencoded()); // parse body
 
 var router = wechat(config, function(req, res){
-    //console.log(req.query, req.body);
-    var msg = req.weixin || {};
-    console.log(msg);
-    if(msg.MsgType == 'text'){
-        check_token();
+    try{
+        //console.log(req.query, req.body);
+        var msg = req.weixin || {};
+        console.log(msg);
+        if(msg.MsgType == 'text'){
+            check_token();
+        }
+        var text = 'welcome! the message you sent is: \n';
+        text += JSON.stringify(msg);
+        res.reply({type:"text", content: text});
+
+    }catch(error){
+        console.log(error);
+        res.reply({type:"text", content: "Some error occurs!"});
     }
-    var text = 'welcome! the message you sent is: \n';
-    text += JSON.stringify(msg);
-    res.reply({type:"text", content: text});
+    
 });
 
 function dummy(req, res){
