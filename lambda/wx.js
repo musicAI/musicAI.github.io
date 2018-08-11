@@ -16,12 +16,12 @@ function btoa(b64encoded){
 }
 
 exports.handler = (event, context, callback) => {
-	console.log(event.queryStringParameters);
-	context.callbackWaitsForEmptyEventLoop = false;
+	//console.log(event.queryStringParameters);
+	context.callbackWaitsForEmptyEventLoop = false; // fix timeout
 	context.succeed = function(results){
+		console.log(results.headers);
 		results.headers.connection = 'close';// fix timeout
 		results.headers["Access-Control-Allow-Origin"] = "*";
-		console.log(results.headers);
 		callback(null, results);
 		return true;
 	}
