@@ -1,11 +1,12 @@
 const wechat = require('./wechat');
 const fs = require('fs');
+const qs = require('query-string');
 const token_file = '/tmp/wx_token';
 const express = require('express');
 const https = require("https");
 
 var access_token = null;
-var time_expire = null;
+var token_time = null;
 
 function get(url, callback) {
     https.get(url, function (result) {
@@ -40,7 +41,7 @@ function check_token(){
             access_token = fs.readFileSync(token_file).toString();
             console.log('restored', access_token);
         }else{
-            // refresh_token()
+            refresh_token()
             console.log('refresh')
         }
     })
@@ -53,13 +54,22 @@ function refresh_token(){
         'secret': config.appsecret
       };
     
-      let wxGetAccessTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?';// + qs.stringify(queryParams);
+      let wxGetAccessTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?' + qs.stringify(queryParams);
       //console.log(wxGetAccessTokenUrl);
 
       get(url, function(res){
+          res = JSON.parse(res);
           console.log(res);
-          // access_token = res; // need destruct
-          // fs.writeFile(token_file, access_token, function (err) {});
+          access_token = res['access_token']; // need destruct
+          fs.writeFile(token_file, access_token, function (err) {
+              if(err){
+                  console.log(err);
+                  token_time = null;
+              }else{
+                token_time = new Date();
+                console.log(token_time.Format('yyyy-MM-dd hh:mm:ss'))
+              }
+          });
       })
 }
 
