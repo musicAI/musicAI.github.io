@@ -14,8 +14,10 @@ app.use(express.json()); // parse body
 app.use(express.urlencoded()); // parse body
 
 var router = wechat(config, function(req, res){
-    console.log(req.query, req.body);
-    res.end('success!');
+    //console.log(req.query, req.body);
+    var msg = req.weixin;
+    console.log(msg);
+    res.reply({type:"text", content:"Hello world!"});
 });
 
 function dummy(req, res){

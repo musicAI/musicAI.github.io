@@ -17,11 +17,12 @@ function btoa(b64encoded){
 
 exports.handler = (event, context, callback) => {
 	//console.log(event.queryStringParameters);
-	context.callbackWaitsForEmptyEventLoop = false; // fix timeout
+	
 	context.succeed = function(results){
 		console.log(results.headers);
 		results.headers.connection = 'close';// fix timeout
 		results.headers["Access-Control-Allow-Origin"] = "*";
+		context.callbackWaitsForEmptyEventLoop = false; // fix timeout
 		callback(null, results);
 		return true;
 	}
