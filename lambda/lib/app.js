@@ -41,7 +41,7 @@ function check_token(){
             access_token = fs.readFileSync(token_file).toString();
             console.log('restored', access_token);
         }else{
-            refresh_token()
+            //refresh_token()
             console.log('refresh')
         }
     })
