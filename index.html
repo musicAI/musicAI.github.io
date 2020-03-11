@@ -1,74 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Music AI Project HKU</title>
-    <script>
-        var query = location.search;
-        var qmap = {};
-        if(query.length>1){
-            query = query.substr(1).split('&');
-            query = query.map(function(x){
-                var vals = x.split('=').map(decodeURIComponent);
-                if(vals.length<2){
-                    vals[1] = '';
-                }
-                qmap[vals[0]] = vals[1];
-                return vals;
-            });
-        }
-        if('url' in qmap){
-            window.location.replace(qmap['url']);
-        }     
-    </script>
+    <title>Music AI</title>
 
   </head>
   <body>
-    <h1>Welcome to the website for Music AI Project, HKU</h1>
+    <h1>Welcome to the website for Music AI Project</h1>
     <p>Hello World!</p>
-    <div><p id="url-list"></p>
     </div>
-    <script>
-      var ele = document.getElementById("url-list");
-      function myCallback(sheetData){
-        var data = [], kvmap = {}, e = sheetData.feed.entry;
-        var raw = e.map(function(x){
-          var r = x.gs$cell.row, c = x.gs$cell.col, t=x.gs$cell.$t;
-          if(!(r in data)){
-            data[r] = [];
-          }
-          data[r][c] = t;
-          return x.gs$cell;
-        });
-        var keyIndex = 0, valueIndex = 0;
-        var keyName = 'key', valueName = 'value';
-        data[1].forEach(function(x, i){
-          if(x == keyName){
-            keyIndex = i;
-          }else if(x == valueName){
-            valueIndex = i;
-          }
-        });
-        if(keyIndex == 0 || valueIndex == 0){
-          console.error('key or value index not found!');
-        }
-        for(var i=2;i<data.length;++i){
-          kvmap[data[i][keyIndex]] = data[i][valueIndex];
-        }
-        var short_url = qmap['s'];
-        if(short_url in kvmap){
-            window.location.replace(kvmap[short_url]);
-        }else{
-          var appendText = ""
-          for(var item in kvmap){
-            appendText += "<a href='"+ kvmap[item] + "'>" + item + "</a><br>";
-          }
-          ele.innerHTML  = appendText;
-          //console.log('No redirection!', kvmap);
-        }
-
-      }
-
-    </script>
     
   </body>
 </html>

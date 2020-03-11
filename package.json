@@ -1,7 +1,7 @@
 {
   "name": "musicai",
   "version": "0.0.1",
-  "description": "Music AI Project, HKU",
+  "description": "Music AI Project",
   "main": "''",
   "dependencies": {
     "aws-serverless-express": "^3.2.0",
